@@ -1,4 +1,5 @@
 import React from "react";
+import downloadCode from "../utils/downloadCode";
 
 export default function Preview({ code }) {
   return (
@@ -12,6 +13,9 @@ export default function Preview({ code }) {
             <span className="w-3 h-3 rounded-full bg-green-500"></span>
           </div>
           <p className="text-sm text-gray-400">Live Preview</p>
+          <button onClick={()=>{
+            downloadCode(code)
+          }}>Download</button>
           <div></div>
         </div>
 

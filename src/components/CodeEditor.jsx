@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Editor, { loader } from "@monaco-editor/react";
+import downloadCode from "../utils/downloadCode";
 
 const CodeEditor = ({ code, setCode, language = "html" }) => {
   // Custom Monaco Theme Setup
@@ -46,7 +47,12 @@ const CodeEditor = ({ code, setCode, language = "html" }) => {
           <h2 className="text-sm font-semibold text-gray-300">
             AI Code Editor
           </h2>
-          <button className="px-3 py-1 text-xs font-medium text-gray-300 border border-gray-700 rounded-md hover:border-indigo-500 hover:text-indigo-400 transition-all duration-200">
+          <button
+            onClick={() => {
+              downloadCode(code);
+            }}
+            className="px-3 py-1 text-xs font-medium text-gray-300 border border-gray-700 rounded-md hover:border-indigo-500 hover:text-indigo-400 transition-all duration-200"
+          >
             Save
           </button>
         </div>
@@ -63,15 +69,57 @@ const CodeEditor = ({ code, setCode, language = "html" }) => {
             fontSize: 15,
             fontFamily: "JetBrains Mono, Fira Code, monospace",
             fontLigatures: true,
+
+            // UI and Layout
             minimap: { enabled: false },
-            scrollBeyondLastLine: false,
-            wordWrap: "on",
-            smoothScrolling: true,
-            cursorBlinking: "expand",
-            cursorSmoothCaretAnimation: true,
             automaticLayout: true,
-            padding: { top: 16 },
-            renderLineHighlight: "all",
+            smoothScrolling: true,
+            scrollBeyondLastLine: false,
+            padding: { top: 16, bottom: 16 },
+            lineNumbersMinChars: 3,
+
+            // Editing Behavior
+            wordWrap: "on",
+            autoClosingBrackets: "always",
+            autoClosingQuotes: "always",
+            autoIndent: "advanced",
+            tabSize: 2,
+            insertSpaces: true,
+            detectIndentation: true,
+
+            // Cursor & Highlighting
+            cursorBlinking: "smooth", // or "expand", "solid"
+            cursorSmoothCaretAnimation: true,
+            renderLineHighlight: "line",
+            renderLineHighlightOnlyWhenFocus: true,
+            occurrencesHighlight: true,
+
+            // Code Assistance
+            quickSuggestions: { other: true, comments: false, strings: true },
+            suggestOnTriggerCharacters: true,
+            acceptSuggestionOnEnter: "smart",
+            snippetSuggestions: "inline",
+            parameterHints: { enabled: true },
+
+            // Gutter & Guides
+            guides: { indentation: false, highlightActiveIndentation: false },
+            renderIndentGuides: false,
+            folding: true,
+            foldingHighlight: true,
+            foldingStrategy: "auto",
+            lineDecorationsWidth: 8,
+
+            // Visual Polish
+            renderWhitespace: "none",
+            overviewRulerBorder: false,
+            hideCursorInOverviewRuler: true,
+            scrollbar: {
+              vertical: "visible",
+              horizontal: "visible",
+              verticalScrollbarSize: 8,
+              horizontalScrollbarSize: 8,
+              alwaysConsumeMouseWheel: false,
+            },
           }}
         />
       </div>

@@ -9,7 +9,7 @@ import Preview from "./components/Preview";
 const App = () => {
   const [prompt, setPrompt] = useState("");
   const [showPreview, setShowPreview] = useState(false);
-  const { getResponse, code, loading } = useApi();
+  const { getResponse, code, loading ,setCode} = useApi();
 
   const submitResponse = (e) => {
     e.preventDefault();
@@ -48,11 +48,11 @@ const App = () => {
 
         {/* Editor / Preview Section */}
         <div className="flex justify-center mt-12">
-          {showPreview ? <Preview code={code} /> : <CodeEditor code={code} />}
+          {showPreview ? <Preview code={code} /> : <CodeEditor code={code} setCode={setCode} />}
         </div>
       </main>
 
-      <p className="mt-6 text-gray-400 text-sm">
+      <p className="mt-6 text-gray-400 text-center text-sm">
         Crafted with ❤️ by{" "}
         <span className="text-indigo-400 font-medium">Kriti</span>
       </p>
