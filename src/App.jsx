@@ -8,7 +8,7 @@ import Preview from "./components/Preview";
 
 const App = () => {
   const [prompt, setPrompt] = useState("");
-  const [showCode, setShowCode] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
   const { getResponse, code, loading } = useApi();
 
   const submitResponse = (e) => {
@@ -18,20 +18,44 @@ const App = () => {
 
   return (
     <div>
+      {/* Header */}
       <Header />
-      <main className="mt-8 ">
-        <Hero />
+
+      {/* Hero */}
+      <main className="pt-20 pb-12 px-6">
+        <Hero
+          prompt={prompt}
+          setPrompt={setPrompt}
+          submitResponse={submitResponse}
+          loading={loading}
+        />
         <Input
           prompt={prompt}
           setPrompt={setPrompt}
           submitResponse={submitResponse}
           loading={loading}
         />
-        <button onClick={()=>{setShowCode(!showCode)}}>
-          {showCode ? "Show Code" : "Preview"}
-        </button>
-        {showCode ? <Preview code={code} /> : <CodeEditor code={code} />}
+
+        {/* Toggle Buttons */}
+        <div className="flex justify-center">
+          <button
+            onClick={() => setShowPreview(!showPreview)}
+            className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 font-semibold text-white tracking-wide shadow-lg hover:shadow-indigo-500/30 transition-all duration-300"
+          >
+            {showPreview ? "Show Code" : "Preview"}
+          </button>
+        </div>
+
+        {/* Editor / Preview Section */}
+        <div className="flex justify-center mt-12">
+          {showPreview ? <Preview code={code} /> : <CodeEditor code={code} />}
+        </div>
       </main>
+
+      <p className="mt-6 text-gray-400 text-sm">
+        Crafted with ❤️ by{" "}
+        <span className="text-indigo-400 font-medium">Kriti</span>
+      </p>
     </div>
   );
 };
